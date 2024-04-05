@@ -117,6 +117,7 @@ interface HeadCell {
     id: keyof Data;
     label: string;
     numeric: boolean;
+    disableSort?: boolean;
 }
 
 const headCells: readonly HeadCell[] = [
@@ -149,6 +150,7 @@ const headCells: readonly HeadCell[] = [
         numeric: true,
         disablePadding: false,
         label: 'Action',
+        disableSort: true,
     },
 ];
 
@@ -190,18 +192,30 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
-                        <TableSortLabel
-                            active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : 'asc'}
-                            onClick={createSortHandler(headCell.id)}
-                        >
-                            {headCell.label}
-                            {orderBy === headCell.id ? (
-                                <Box component="span" sx={visuallyHidden}>
-                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                </Box>
-                            ) : null}
-                        </TableSortLabel>
+                        {
+                            headCell.disableSort ?
+                                <>
+                                    {headCell.label}
+                                    {orderBy === headCell.id ? (
+                                        <Box component="span" sx={visuallyHidden}>
+                                            {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                        </Box>
+                                    ) : null}
+                                </>
+                                :
+                                <TableSortLabel
+                                    active={orderBy === headCell.id}
+                                    direction={orderBy === headCell.id ? order : 'asc'}
+                                    onClick={createSortHandler(headCell.id)}
+                                >
+                                    {headCell.label}
+                                    {orderBy === headCell.id ? (
+                                        <Box component="span" sx={visuallyHidden}>
+                                            {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                        </Box>
+                                    ) : null}
+                                </TableSortLabel>
+                        }
                     </TableCell>
                 ))}
             </TableRow>
@@ -256,7 +270,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                 <div className='flex'>
                     <TextField
                         id="outlined-search"
-                        label={<span>Search table</span>}
+                        label={<span>Search...</span>}
                         type="search"
                         size="small"
                     />
