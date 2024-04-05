@@ -186,7 +186,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
+                        align={'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
@@ -395,11 +395,11 @@ export default function EnhancedTable() {
                                         >
                                             {row.name}
                                         </TableCell>
-                                        <TableCell onClick={() => handleRowItemClick(row.id)} align="right">{row.engagedUnique}</TableCell>
-                                        <TableCell onClick={() => handleRowItemClick(row.id)} align="right">{row.acquired}</TableCell>
-                                        <TableCell onClick={() => handleRowItemClick(row.id)} align="right">{row.conversion}</TableCell>
-                                        {/* <TableCell align="right">{row.actions}</TableCell> */}
-                                        <TableCell align="right">
+                                        <TableCell onClick={() => handleRowItemClick(row.id)} align="left">{row.engagedUnique}</TableCell>
+                                        <TableCell onClick={() => handleRowItemClick(row.id)} align="left">{row.acquired}</TableCell>
+                                        <TableCell onClick={() => handleRowItemClick(row.id)} align="left">{row.conversion}</TableCell>
+                                        {/* <TableCell align="left">{row.actions}</TableCell> */}
+                                        <TableCell align="left">
                                             {/* <Dropdown>
                                                 <MenuButton>My account</MenuButton>
                                                 <Menu>

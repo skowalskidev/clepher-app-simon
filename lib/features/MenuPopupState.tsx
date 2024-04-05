@@ -12,7 +12,9 @@ export default function MenuPopupState({ menuItems }: any) {
                     {/* <Button variant="contained" {...bindTrigger(popupState)}>
                         Dashboard
                     </Button> */}
-                    <BsThreeDots className='text-2xl w-full' {...bindTrigger(popupState)} />
+                    <div {...bindTrigger(popupState)}>
+                        <BsThreeDots className='text-2xl' />
+                    </div>
                     <Menu {...bindMenu(popupState)}>
                         {menuItems.map((menuItem: React.ReactNode, index: number) => (
                             <MenuItem key={index} onClick={popupState.close}>{menuItem}</MenuItem>
