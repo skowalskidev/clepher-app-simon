@@ -2,6 +2,7 @@
 import { Counter } from "@/lib/features/counter/Counter";
 import { SiInternetcomputer } from "react-icons/si";
 import StoreProvider from "./StoreProvider";
+import Table from "@/lib/features/table/Table"
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
         <SiInternetcomputer />
         <Counter />
         <button className="btn btn-primary">Hello daisyUI!</button>
+        <Table />
       </main>
     </StoreProvider>
   );
