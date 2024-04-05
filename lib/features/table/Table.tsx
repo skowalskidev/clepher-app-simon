@@ -17,55 +17,52 @@ import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-// import DeleteIcon from '@mui/icons-material/Delete';
 import { MdDelete } from "react-icons/md";
-// import FilterListIcon from '@mui/icons-material/FilterList';
 import { MdFilterListAlt } from "react-icons/md";
 import { visuallyHidden } from '@mui/utils';
 
 interface Data {
     id: number;
-    calories: number;
-    carbs: number;
-    fat: number;
     name: string;
-    protein: number;
+    engagedUnique: string;
+    acquired: number;
+    conversion: number;
+    actions: Actions[],
+}
+
+enum Actions {
+    DELETE = 'DELETE',
+    EDIT = 'EDIT',
+    RENAME = 'RENAME',
 }
 
 function createData(
     id: number,
     name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number,
+    engagedUnique: string,
+    acquired: number,
+    conversion: number,
+    actions: Actions[],
 ): Data {
     return {
         id,
         name,
-        calories,
-        fat,
-        carbs,
-        protein,
+        engagedUnique,
+        acquired,
+        conversion,
+        actions,
     };
 }
 
 const rows = [
-    createData(1, 'Cupcake', 305, 3.7, 67, 4.3),
-    createData(2, 'Donut', 452, 25.0, 51, 4.9),
-    createData(3, 'Eclair', 262, 16.0, 24, 6.0),
-    createData(4, 'Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData(5, 'Gingerbread', 356, 16.0, 49, 3.9),
-    createData(6, 'Honeycomb', 408, 3.2, 87, 6.5),
-    createData(7, 'Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData(8, 'Jelly Bean', 375, 0.0, 94, 0.0),
-    createData(9, 'KitKat', 518, 26.0, 65, 7.0),
-    createData(10, 'Lollipop', 392, 0.2, 98, 0.0),
-    createData(11, 'Marshmallow', 318, 0, 81, 2.0),
-    createData(12, 'Nougat', 360, 19.0, 9, 37.0),
-    createData(13, 'Oreo', 437, 18.0, 63, 4.0),
+    createData(1, 'Optimization', '5000 / 2500', 3000, 50, [Actions.EDIT, Actions.RENAME, Actions.DELETE]),
+    createData(2, 'Operations', '2000 / 1000', 800, 25, [Actions.EDIT, Actions.RENAME, Actions.DELETE]),
+    createData(3, 'Accountability', '7000 / 3500', 4500, 60, [Actions.EDIT, Actions.RENAME, Actions.DELETE]),
+    createData(4, 'Configuration', '3500 / 2000', 1800, 30, [Actions.EDIT, Actions.RENAME, Actions.DELETE]),
+    createData(5, 'Paradigm', '8000 / 4000', 5500, 70, [Actions.EDIT, Actions.RENAME, Actions.DELETE]),
+    createData(6, 'Directives', '4500 / 2800', 2300, 45, [Actions.EDIT, Actions.RENAME, Actions.DELETE]),
+    createData(7, 'Implementation', '6000 / 3000', 3500, 55, [Actions.EDIT, Actions.RENAME, Actions.DELETE]),
+    createData(8, 'Research', '6500 / 3500', 4000, 65, [Actions.EDIT, Actions.RENAME, Actions.DELETE]),
 ];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -120,31 +117,31 @@ const headCells: readonly HeadCell[] = [
         id: 'name',
         numeric: false,
         disablePadding: true,
-        label: 'Dessert (100g serving)',
+        label: 'Name',
     },
     {
-        id: 'calories',
-        numeric: true,
+        id: 'engagedUnique',
+        numeric: false,
         disablePadding: false,
-        label: 'Calories',
+        label: 'Engaged / Unique',
     },
     {
-        id: 'fat',
+        id: 'acquired',
         numeric: true,
         disablePadding: false,
-        label: 'Fat (g)',
+        label: 'Acquired',
     },
     {
-        id: 'carbs',
+        id: 'conversion',
         numeric: true,
         disablePadding: false,
-        label: 'Carbs (g)',
+        label: 'Conversion',
     },
     {
-        id: 'protein',
+        id: 'actions',
         numeric: true,
         disablePadding: false,
-        label: 'Protein (g)',
+        label: 'Action',
     },
 ];
 
@@ -239,7 +236,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                     id="tableTitle"
                     component="div"
                 >
-                    Nutrition
+                    Post Engagement
                 </Typography>
             )}
             {numSelected > 0 ? (
@@ -259,8 +256,8 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     );
 }
 export default function EnhancedTable() {
-    const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof Data>('calories');
+    const [order, setOrder] = React.useState<Order>('desc');
+    const [orderBy, setOrderBy] = React.useState<keyof Data>('conversion');
     const [selected, setSelected] = React.useState<readonly number[]>([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -377,10 +374,10 @@ export default function EnhancedTable() {
                                         >
                                             {row.name}
                                         </TableCell>
-                                        <TableCell align="right">{row.calories}</TableCell>
-                                        <TableCell align="right">{row.fat}</TableCell>
-                                        <TableCell align="right">{row.carbs}</TableCell>
-                                        <TableCell align="right">{row.protein}</TableCell>
+                                        <TableCell align="right">{row.engagedUnique}</TableCell>
+                                        <TableCell align="right">{row.acquired}</TableCell>
+                                        <TableCell align="right">{row.conversion}</TableCell>
+                                        <TableCell align="right">{row.actions}</TableCell>
                                     </TableRow>
                                 );
                             })}
