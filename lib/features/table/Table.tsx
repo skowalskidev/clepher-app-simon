@@ -20,6 +20,13 @@ import Tooltip from '@mui/material/Tooltip';
 import { MdDelete } from "react-icons/md";
 import { MdFilterListAlt } from "react-icons/md";
 import { visuallyHidden } from '@mui/utils';
+import TextField from '@mui/material/TextField';
+import { Dropdown } from '@mui/base/Dropdown';
+import { MenuButton } from '@mui/base/MenuButton';
+import { Menu } from '@mui/base/Menu';
+import { MenuItem } from '@mui/base/MenuItem';
+import MenuPopupState from '../MenuPopupState';
+
 
 interface Data {
     id: number;
@@ -246,11 +253,14 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                     </IconButton>
                 </Tooltip>
             ) : (
-                <Tooltip title="Filter list">
-                    <IconButton>
-                        <MdFilterListAlt />
-                    </IconButton>
-                </Tooltip>
+                <div className='flex p-4'>
+                    <TextField id="outlined-search" label={<span>Search table</span>} type="search" />
+                    <Tooltip title="Filter list">
+                        <IconButton>
+                            <MdFilterListAlt />
+                        </IconButton>
+                    </Tooltip>
+                </div>
             )}
         </Toolbar>
     );
@@ -323,6 +333,12 @@ export default function EnhancedTable() {
         [order, orderBy, page, rowsPerPage],
     );
 
+    const Listbox = ({ children }: any) => {
+        return (
+            <div className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>{children}</div>
+        )
+    }
+
     return (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
@@ -349,7 +365,7 @@ export default function EnhancedTable() {
                                 return (
                                     <TableRow
                                         hover
-                                        onClick={(event) => handleClick(event, row.id)}
+                                        // onClick={(event) => handleClick(event, row.id)}
                                         role="checkbox"
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
@@ -364,6 +380,7 @@ export default function EnhancedTable() {
                                                 inputProps={{
                                                     'aria-labelledby': labelId,
                                                 }}
+                                                onClick={(event) => handleClick(event, row.id)}
                                             />
                                         </TableCell>
                                         <TableCell
@@ -377,7 +394,23 @@ export default function EnhancedTable() {
                                         <TableCell align="right">{row.engagedUnique}</TableCell>
                                         <TableCell align="right">{row.acquired}</TableCell>
                                         <TableCell align="right">{row.conversion}</TableCell>
-                                        <TableCell align="right">{row.actions}</TableCell>
+                                        {/* <TableCell align="right">{row.actions}</TableCell> */}
+                                        <TableCell align="right">
+                                            {/* <Dropdown>
+                                                <MenuButton>My account</MenuButton>
+                                                <Menu>
+                                                    <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                                                        <li><a>Item 1</a></li>
+                                                        <li><a>Item 2</a></li>
+                                                    </ul>
+                                                </Menu>
+                                            </Dropdown> */}
+                                            <MenuPopupState menuItems={[
+                                                <div className='flex items-center'><MdDelete /> Edit</div>,
+                                                <div className='flex items-center'><MdDelete /> Rename</div>,
+                                                <div className='flex items-center'><MdDelete /> Delete</div>
+                                            ]} />
+                                        </TableCell>
                                     </TableRow>
                                 );
                             })}
@@ -403,6 +436,6 @@ export default function EnhancedTable() {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
-        </Box>
+        </Box >
     );
 }
