@@ -309,6 +309,10 @@ export default function EnhancedTable() {
         setSelected(newSelected);
     };
 
+    function handleRowItemClick(rowId: number) {
+        console.log("Edit row" + rowId);
+    }
+
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
@@ -391,9 +395,9 @@ export default function EnhancedTable() {
                                         >
                                             {row.name}
                                         </TableCell>
-                                        <TableCell align="right">{row.engagedUnique}</TableCell>
-                                        <TableCell align="right">{row.acquired}</TableCell>
-                                        <TableCell align="right">{row.conversion}</TableCell>
+                                        <TableCell onClick={() => handleRowItemClick(row.id)} align="right">{row.engagedUnique}</TableCell>
+                                        <TableCell onClick={() => handleRowItemClick(row.id)} align="right">{row.acquired}</TableCell>
+                                        <TableCell onClick={() => handleRowItemClick(row.id)} align="right">{row.conversion}</TableCell>
                                         {/* <TableCell align="right">{row.actions}</TableCell> */}
                                         <TableCell align="right">
                                             {/* <Dropdown>
