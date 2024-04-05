@@ -11,24 +11,22 @@ export function Counter() {
 
     // omit rendering logic
     return (
-        <div>
-            <div>
-                <button
-                    className='btn btn-primary'
-                    aria-label="Decrement value"
-                    onClick={() => dispatch(decrement())}
-                >
-                    Decrement
-                </button>
-                <span>{count}</span>
-                <button
-                    className='btn btn-primary'
-                    aria-label="Increment value"
-                    onClick={() => dispatch(increment())}
-                >
-                    Increment
-                </button>
-            </div>
+        <div className='flex gap-4 items-center'>
+            <button
+                className='btn btn-primary'
+                aria-label="Decrement value"
+                onClick={() => dispatch(decrement())}
+            >
+                Decrement
+            </button>
+            <span className='text-4xl'>{count}</span>
+            <button
+                className='btn btn-primary'
+                aria-label="Increment value"
+                onClick={() => dispatch(increment())}
+            >
+                Increment
+            </button>
         </div>
     )
 }
