@@ -17,15 +17,12 @@ import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdEdit } from "react-icons/md";
 import { MdFilterListAlt } from "react-icons/md";
 import { visuallyHidden } from '@mui/utils';
 import TextField from '@mui/material/TextField';
-import { Dropdown } from '@mui/base/Dropdown';
-import { MenuButton } from '@mui/base/MenuButton';
-import { Menu } from '@mui/base/Menu';
-import { MenuItem } from '@mui/base/MenuItem';
 import MenuPopupState from '../MenuPopupState';
+import { BiRename } from 'react-icons/bi';
 
 
 interface Data {
@@ -429,9 +426,9 @@ export default function EnhancedTable() {
                                                 </Menu>
                                             </Dropdown> */}
                                             <MenuPopupState menuItems={[
-                                                <div className='flex items-center'><MdDelete /> Edit</div>,
-                                                <div className='flex items-center'><MdDelete /> Rename</div>,
-                                                <div className='flex items-center'><MdDelete /> Delete</div>
+                                                <div className='flex items-center gap-2'><MdEdit /> Edit</div>,
+                                                <div className='flex items-center gap-2'><BiRename /> Rename</div>,
+                                                <div className='flex items-center gap-2 text-red-600'><MdDelete /> Delete</div>
                                             ]} />
                                         </TableCell>
                                     </TableRow>
