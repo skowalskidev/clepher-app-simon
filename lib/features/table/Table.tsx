@@ -253,8 +253,13 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                     </IconButton>
                 </Tooltip>
             ) : (
-                <div className='flex p-4'>
-                    <TextField id="outlined-search" label={<span>Search table</span>} type="search" />
+                <div className='flex'>
+                    <TextField
+                        id="outlined-search"
+                        label={<span>Search table</span>}
+                        type="search"
+                        size="small"
+                    />
                     <Tooltip title="Filter list">
                         <IconButton>
                             <MdFilterListAlt />
