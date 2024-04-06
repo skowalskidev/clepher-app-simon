@@ -4,7 +4,11 @@ import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { BsThreeDots } from "react-icons/bs";
 
-export default function MenuPopupState({ menuItems }: any) {
+interface Props {
+    menuItems: React.ReactElement[];
+}
+
+export default function MenuPopupState({ menuItems }: Props) {
     return (
         <PopupState variant="popover" popupId="demo-popup-menu">
             {(popupState) => (
@@ -16,8 +20,8 @@ export default function MenuPopupState({ menuItems }: any) {
                         <BsThreeDots className='text-2xl' />
                     </div>
                     <Menu {...bindMenu(popupState)}>
-                        {menuItems.map((menuItem: React.ReactNode, index: number) => (
-                            <MenuItem key={index} onClick={popupState.close}>{menuItem}</MenuItem>
+                        {menuItems.map((menuItem) => (
+                            <MenuItem key={menuItem.key} onClick={popupState.close}>{menuItem}</MenuItem>
                         ))}
                     </Menu>
                 </React.Fragment>

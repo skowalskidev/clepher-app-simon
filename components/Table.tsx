@@ -346,6 +346,7 @@ export default function EnhancedTable() {
 
     const visibleRows = React.useMemo(
         () =>
+            // @ts-ignore
             stableSort(rows, getComparator(order, orderBy)).slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
@@ -379,6 +380,7 @@ export default function EnhancedTable() {
                         />
                         <TableBody>
                             {visibleRows.map((row, index) => {
+                                // @ts-ignore
                                 const isItemSelected = isSelected(row.id);
                                 const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -400,7 +402,7 @@ export default function EnhancedTable() {
                                                 inputProps={{
                                                     'aria-labelledby': labelId,
                                                 }}
-                                                onClick={(event) => handleClick(event, row.id)}
+                                                onClick={(event) => handleClick(event, row.id as number)}
                                             />
                                         </TableCell>
                                         <TableCell
@@ -411,9 +413,9 @@ export default function EnhancedTable() {
                                         >
                                             {row.name}
                                         </TableCell>
-                                        <TableCell onClick={() => handleRowItemClick(row.id)} align="left">{row.engagedUnique}</TableCell>
-                                        <TableCell onClick={() => handleRowItemClick(row.id)} align="left">{row.acquired}</TableCell>
-                                        <TableCell onClick={() => handleRowItemClick(row.id)} align="left">{row.conversion}</TableCell>
+                                        <TableCell onClick={() => handleRowItemClick(row.id as number)} align="left">{row.engagedUnique}</TableCell>
+                                        <TableCell onClick={() => handleRowItemClick(row.id as number)} align="left">{row.acquired}</TableCell>
+                                        <TableCell onClick={() => handleRowItemClick(row.id as number)} align="left">{row.conversion}</TableCell>
                                         {/* <TableCell align="left">{row.actions}</TableCell> */}
                                         <TableCell align="left">
                                             {/* <Dropdown>
@@ -426,9 +428,9 @@ export default function EnhancedTable() {
                                                 </Menu>
                                             </Dropdown> */}
                                             <MenuPopupState menuItems={[
-                                                <div className='flex items-center gap-2'><MdEdit /> Edit</div>,
-                                                <div className='flex items-center gap-2'><BiRename /> Rename</div>,
-                                                <div className='flex items-center gap-2 text-red-600'><MdDelete /> Delete</div>
+                                                <div key={`edit-${row.id}`} className='flex items-center gap-2'><MdEdit /> Edit</div>,
+                                                <div key={`rename-${row.id}`} className='flex items-center gap-2'><BiRename /> Rename</div>,
+                                                <div key={`delete-${row.id}`} className='flex items-center gap-2 text-red-600'><MdDelete /> Delete</div>
                                             ]} />
                                         </TableCell>
                                     </TableRow>
