@@ -1,73 +1,20 @@
 "use client"
 
 import * as React from 'react';
-import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
 import { MdDelete, MdEdit } from "react-icons/md";
-import { MdFilterListAlt } from "react-icons/md";
-import { visuallyHidden } from '@mui/utils';
-import TextField from '@mui/material/TextField';
-import MenuPopupState from './MenuPopupState';
 import { BiRename } from 'react-icons/bi';
-
-
-interface Data {
-    id: number;
-    name: string;
-    engagedUnique: string;
-    acquired: number;
-    conversion: number;
-    actions: Actions[],
-}
-
-enum Actions {
-    DELETE = 'DELETE',
-    EDIT = 'EDIT',
-    RENAME = 'RENAME',
-}
-
-function createData(
-    id: number,
-    name: string,
-    engagedUnique: string,
-    acquired: number,
-    conversion: number,
-    actions: Actions[],
-): Data {
-    return {
-        id,
-        name,
-        engagedUnique,
-        acquired,
-        conversion,
-        actions,
-    };
-}
-
-const rows = [
-    createData(1, 'Optimization', '5000 / 2500', 3000, 50, [Actions.EDIT, Actions.RENAME, Actions.DELETE]),
-    createData(2, 'Operations', '2000 / 1000', 800, 25, [Actions.EDIT, Actions.RENAME, Actions.DELETE]),
-    createData(3, 'Accountability', '7000 / 3500', 4500, 60, [Actions.EDIT, Actions.RENAME, Actions.DELETE]),
-    createData(4, 'Configuration', '3500 / 2000', 1800, 30, [Actions.EDIT, Actions.RENAME, Actions.DELETE]),
-    createData(5, 'Paradigm', '8000 / 4000', 5500, 70, [Actions.EDIT, Actions.RENAME, Actions.DELETE]),
-    createData(6, 'Directives', '4500 / 2800', 2300, 45, [Actions.EDIT, Actions.RENAME, Actions.DELETE]),
-    createData(7, 'Implementation', '6000 / 3000', 3500, 55, [Actions.EDIT, Actions.RENAME, Actions.DELETE]),
-    createData(8, 'Research', '6500 / 3500', 4000, 65, [Actions.EDIT, Actions.RENAME, Actions.DELETE]),
-];
+import { EnhancedTableToolbar } from './Toolbar';
+import MenuPopupState from '../MenuPopupState';
+import { Head, HeadCell } from './Head';
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -79,7 +26,7 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     return 0;
 }
 
-type Order = 'asc' | 'desc';
+export type Order = 'asc' | 'desc';
 
 function getComparator<Key extends keyof any>(
     order: Order,
@@ -109,184 +56,13 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
     return stabilizedThis.map((el) => el[0]);
 }
 
-interface HeadCell {
-    disablePadding: boolean;
-    id: keyof Data;
-    label: string;
-    numeric: boolean;
-    disableSort?: boolean;
-}
-
-const headCells: readonly HeadCell[] = [
-    {
-        id: 'name',
-        numeric: false,
-        disablePadding: true,
-        label: 'Name',
-    },
-    {
-        id: 'engagedUnique',
-        numeric: false,
-        disablePadding: false,
-        label: 'Engaged / Unique',
-    },
-    {
-        id: 'acquired',
-        numeric: true,
-        disablePadding: false,
-        label: 'Acquired',
-    },
-    {
-        id: 'conversion',
-        numeric: true,
-        disablePadding: false,
-        label: 'Conversion',
-    },
-    {
-        id: 'actions',
-        numeric: true,
-        disablePadding: false,
-        label: 'Action',
-        disableSort: true,
-    },
-];
-
-interface EnhancedTableProps {
-    numSelected: number;
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
-    onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    order: Order;
-    orderBy: string;
-    rowCount: number;
-}
-
-function EnhancedTableHead(props: EnhancedTableProps) {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-        props;
-    const createSortHandler =
-        (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
-            onRequestSort(event, property);
-        };
-
-    return (
-        <TableHead>
-            <TableRow>
-                <TableCell padding="checkbox">
-                    <Checkbox
-                        color="primary"
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        inputProps={{
-                            'aria-label': 'select all desserts',
-                        }}
-                    />
-                </TableCell>
-                {headCells.map((headCell) => (
-                    <TableCell
-                        key={headCell.id}
-                        align={'left'}
-                        padding={headCell.disablePadding ? 'none' : 'normal'}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                    >
-                        {
-                            headCell.disableSort ?
-                                <>
-                                    {headCell.label}
-                                    {orderBy === headCell.id ? (
-                                        <Box component="span" sx={visuallyHidden}>
-                                            {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                        </Box>
-                                    ) : null}
-                                </>
-                                :
-                                <TableSortLabel
-                                    active={orderBy === headCell.id}
-                                    direction={orderBy === headCell.id ? order : 'asc'}
-                                    onClick={createSortHandler(headCell.id)}
-                                >
-                                    {headCell.label}
-                                    {orderBy === headCell.id ? (
-                                        <Box component="span" sx={visuallyHidden}>
-                                            {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                        </Box>
-                                    ) : null}
-                                </TableSortLabel>
-                        }
-                    </TableCell>
-                ))}
-            </TableRow>
-        </TableHead>
-    );
-}
-
-interface EnhancedTableToolbarProps {
-    numSelected: number;
-}
-
-function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
-    const { numSelected } = props;
-
-    return (
-        <Toolbar
-            sx={{
-                pl: { sm: 2 },
-                pr: { xs: 1, sm: 1 },
-                ...(numSelected > 0 && {
-                    bgcolor: (theme) =>
-                        alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-                }),
-            }}
-        >
-            {numSelected > 0 ? (
-                <Typography
-                    sx={{ flex: '1 1 100%' }}
-                    color="inherit"
-                    variant="subtitle1"
-                    component="div"
-                >
-                    {numSelected} selected
-                </Typography>
-            ) : (
-                <Typography
-                    sx={{ flex: '1 1 100%' }}
-                    variant="h6"
-                    id="tableTitle"
-                    component="div"
-                >
-                    Post Engagement
-                </Typography>
-            )}
-            {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton>
-                        <MdDelete />
-                    </IconButton>
-                </Tooltip>
-            ) : (
-                <div className='flex'>
-                    <TextField
-                        id="outlined-search"
-                        label={<span>Search...</span>}
-                        type="search"
-                        size="small"
-                    />
-                    <Tooltip title="Filter list">
-                        <IconButton>
-                            <MdFilterListAlt />
-                        </IconButton>
-                    </Tooltip>
-                </div>
-            )}
-        </Toolbar>
-    );
-}
-
-interface Props {
+interface Props<Data> {
     onRowClick: (rowId: number) => void;
+    rows: Data[];
+    headCells: readonly HeadCell<Data>[];
 }
 
-export default function EnhancedTable({ onRowClick }: Props) {
+export default function EnhancedTable<Data>({ onRowClick, rows, headCells }: Props<Data>) {
     const [order, setOrder] = React.useState<Order>('desc');
     const [orderBy, setOrderBy] = React.useState<keyof Data>('conversion');
     const [selected, setSelected] = React.useState<readonly number[]>([]);
@@ -365,13 +141,14 @@ export default function EnhancedTable({ onRowClick }: Props) {
                         aria-labelledby="tableTitle"
                         size={'small'}
                     >
-                        <EnhancedTableHead
+                        <Head<Data>
                             numSelected={selected.length}
                             order={order}
                             orderBy={orderBy}
                             onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
                             rowCount={rows.length}
+                            headCells={headCells}
                         />
                         <TableBody>
                             {visibleRows.map((row, index) => {
