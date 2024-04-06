@@ -281,7 +281,12 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         </Toolbar>
     );
 }
-export default function EnhancedTable() {
+
+interface Props {
+    onRowClick: (rowId: number) => void;
+}
+
+export default function EnhancedTable({ onRowClick }: Props) {
     const [order, setOrder] = React.useState<Order>('desc');
     const [orderBy, setOrderBy] = React.useState<keyof Data>('conversion');
     const [selected, setSelected] = React.useState<readonly number[]>([]);
@@ -325,10 +330,6 @@ export default function EnhancedTable() {
         setSelected(newSelected);
     };
 
-    function handleRowItemClick(rowId: number) {
-        console.log("Edit row" + rowId);
-    }
-
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
@@ -353,12 +354,6 @@ export default function EnhancedTable() {
             ),
         [order, orderBy, page, rowsPerPage],
     );
-
-    const Listbox = ({ children }: any) => {
-        return (
-            <div className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'>{children}</div>
-        )
-    }
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -413,9 +408,9 @@ export default function EnhancedTable() {
                                         >
                                             {row.name}
                                         </TableCell>
-                                        <TableCell onClick={() => handleRowItemClick(row.id as number)} align="left">{row.engagedUnique}</TableCell>
-                                        <TableCell onClick={() => handleRowItemClick(row.id as number)} align="left">{row.acquired}</TableCell>
-                                        <TableCell onClick={() => handleRowItemClick(row.id as number)} align="left">{row.conversion}</TableCell>
+                                        <TableCell onClick={() => onRowClick(row.id as number)} align="left">{row.engagedUnique}</TableCell>
+                                        <TableCell onClick={() => onRowClick(row.id as number)} align="left">{row.acquired}</TableCell>
+                                        <TableCell onClick={() => onRowClick(row.id as number)} align="left">{row.conversion}</TableCell>
                                         {/* <TableCell align="left">{row.actions}</TableCell> */}
                                         <TableCell align="left">
                                             {/* <Dropdown>
@@ -428,9 +423,16 @@ export default function EnhancedTable() {
                                                 </Menu>
                                             </Dropdown> */}
                                             <MenuPopupState menuItems={[
-                                                <div key={`edit-${row.id}`} className='flex items-center gap-2'><MdEdit /> Edit</div>,
-                                                <div key={`rename-${row.id}`} className='flex items-center gap-2'><BiRename /> Rename</div>,
-                                                <div key={`delete-${row.id}`} className='flex items-center gap-2 text-red-600'><MdDelete /> Delete</div>
+                                                {
+                                                    onClick: () => onRowClick(row.id as number),
+                                                    component: <div
+                                                        key={`edit-${row.id}`}
+                                                        className='flex items-center gap-2'>
+                                                        <MdEdit /> Edit
+                                                    </div>
+                                                },
+                                                { disabled: true, component: <div key={`rename-${row.id}`} className='flex items-center gap-2'><BiRename /> Rename</div> },
+                                                { disabled: true, component: <div key={`delete-${row.id}`} className='flex items-center gap-2 text-red-600'><MdDelete /> Delete</div> }
                                             ]} />
                                         </TableCell>
                                     </TableRow>

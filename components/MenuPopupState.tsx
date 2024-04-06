@@ -4,8 +4,14 @@ import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { BsThreeDots } from "react-icons/bs";
 
+export interface DropdownMenuItem {
+    component: React.ReactElement;
+    disabled?: boolean;
+    onClick?: () => void,
+}
+
 interface Props {
-    menuItems: React.ReactElement[];
+    menuItems: DropdownMenuItem[];
 }
 
 export default function MenuPopupState({ menuItems }: Props) {
@@ -21,7 +27,7 @@ export default function MenuPopupState({ menuItems }: Props) {
                     </div>
                     <Menu {...bindMenu(popupState)}>
                         {menuItems.map((menuItem) => (
-                            <MenuItem key={menuItem.key} onClick={popupState.close}>{menuItem}</MenuItem>
+                            <MenuItem onClickCapture={menuItem.onClick} disabled={menuItem.disabled} key={menuItem.component.key} onClick={popupState.close}>{menuItem.component}</MenuItem>
                         ))}
                     </Menu>
                 </React.Fragment>
