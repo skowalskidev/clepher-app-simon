@@ -21,7 +21,7 @@ import { MdDelete, MdEdit } from "react-icons/md";
 import { MdFilterListAlt } from "react-icons/md";
 import { visuallyHidden } from '@mui/utils';
 import TextField from '@mui/material/TextField';
-import MenuPopupState from '../MenuPopupState';
+import MenuPopupState from './MenuPopupState';
 import { BiRename } from 'react-icons/bi';
 
 

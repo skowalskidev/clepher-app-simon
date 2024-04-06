@@ -1,6 +1,6 @@
 'use client'
 
-import { useAppSelector, useAppDispatch } from '@/lib/hooks'
+import { useAppSelector, useAppDispatch } from '@/lib/redux/hooks'
 
 import { decrement, increment, selectCount } from './counterSlice'
 

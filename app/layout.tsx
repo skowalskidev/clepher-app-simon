@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
+import { Header } from "@/components/Header";
+import { Sidebar } from "@/components/Sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,11 +18,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="winter">
+    <html lang="en" data-theme="winter" className="bg-base-200">
       <body className={inter.className}>
-        <AppRouterCacheProvider>
-          {children}
-        </AppRouterCacheProvider></body>
+        <Header />
+        <div className="flex">
+          <Sidebar />
+          <div className="ml-16 mt-16 w-full">
+            <AppRouterCacheProvider>
+              {children}
+            </AppRouterCacheProvider>
+          </div>
+        </div>
+      </body>
     </html>
   );
 }
