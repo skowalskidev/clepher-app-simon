@@ -56,15 +56,22 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
     return stabilizedThis.map((el) => el[0]);
 }
 
-interface Props<Data> {
-    onRowClick: (rowId: number) => void;
-    rows: Data[];
-    headCells: readonly HeadCell<Data>[];
+interface TableDataBase {
+    id: number;
 }
 
-export default function EnhancedTable<Data>({ onRowClick, rows, headCells }: Props<Data>) {
+type TableData<Data> = Data & TableDataBase;
+
+interface Props<Data> {
+    onRowClick: (rowId: number) => void;
+    rows: TableData<Data>[];
+    headCells: readonly HeadCell<Data>[];
+    orderByInitial?: keyof Data;
+}
+
+export default function EnhancedTable<Data>({ onRowClick, rows, headCells, orderByInitial }: Props<Data>) {
     const [order, setOrder] = React.useState<Order>('desc');
-    const [orderBy, setOrderBy] = React.useState<keyof Data>('conversion');
+    const [orderBy, setOrderBy] = React.useState<keyof Data | undefined>(orderByInitial);
     const [selected, setSelected] = React.useState<readonly number[]>([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -121,13 +128,13 @@ export default function EnhancedTable<Data>({ onRowClick, rows, headCells }: Pro
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-    const visibleRows = React.useMemo(
+    const visibleRows: TableData<Data>[] = React.useMemo(
         () =>
             // @ts-ignore
             stableSort(rows, getComparator(order, orderBy)).slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
-            ),
+            ) as TableData<Data>[],
         [order, orderBy, page, rowsPerPage],
     );
 
@@ -177,29 +184,19 @@ export default function EnhancedTable<Data>({ onRowClick, rows, headCells }: Pro
                                                 onClick={(event) => handleClick(event, row.id as number)}
                                             />
                                         </TableCell>
-                                        <TableCell
-                                            component="th"
-                                            id={labelId}
-                                            scope="row"
-                                            padding="none"
-                                            onClick={() => onRowClick(row.id as number)}
-                                        >
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell onClick={() => onRowClick(row.id as number)} align="left">{row.engagedUnique}</TableCell>
-                                        <TableCell onClick={() => onRowClick(row.id as number)} align="left">{row.acquired}</TableCell>
-                                        <TableCell onClick={() => onRowClick(row.id as number)} align="left">{row.conversion}</TableCell>
-                                        {/* <TableCell align="left">{row.actions}</TableCell> */}
+                                        {Object.entries(row)
+                                            .filter(([key]) => key !== 'id' && key !== 'actions') // Filter out 'id' and 'actions'
+                                            .map(([key, value], index) => (
+                                                <TableCell
+                                                    key={`${row.id}-${key}`}
+                                                    onClick={() => onRowClick(row.id)}
+                                                    align="left"
+                                                    padding={index === 0 ? "none" : "normal"} // Apply 'padding="none"' only to the first element
+                                                >
+                                                    {value as React.ReactNode}
+                                                </TableCell>
+                                            ))}
                                         <TableCell align="left">
-                                            {/* <Dropdown>
-                                                <MenuButton>My account</MenuButton>
-                                                <Menu>
-                                                    <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
-                                                        <li><a>Item 1</a></li>
-                                                        <li><a>Item 2</a></li>
-                                                    </ul>
-                                                </Menu>
-                                            </Dropdown> */}
                                             <MenuPopupState menuItems={[
                                                 {
                                                     onClick: () => onRowClick(row.id as number),

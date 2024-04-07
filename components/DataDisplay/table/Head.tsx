@@ -15,7 +15,7 @@ interface EnhancedTableProps<Data> {
     onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
     onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
     order: Order;
-    orderBy: string;
+    orderBy: keyof Data | undefined;
     rowCount: number;
     headCells: readonly HeadCell<Data>[];
 }
