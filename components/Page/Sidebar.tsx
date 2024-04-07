@@ -1,5 +1,5 @@
 import { SquareButton } from "../Actions/SquareButton"
-import { Horseshoe } from "../Iconsx/Horseshoe"
+import { Horseshoe } from "../Icons/Horseshoe"
 
 export const Sidebar = () => {
     return (
