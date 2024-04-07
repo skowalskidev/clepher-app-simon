@@ -182,6 +182,7 @@ export default function EnhancedTable<Data>({ onRowClick, rows, headCells }: Pro
                                             id={labelId}
                                             scope="row"
                                             padding="none"
+                                            onClick={() => onRowClick(row.id as number)}
                                         >
                                             {row.name}
                                         </TableCell>
