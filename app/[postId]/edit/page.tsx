@@ -14,8 +14,8 @@ export default function Edit() {
                     <Toggle label="Enable To Privately Reply To First-Level Comments Only" />
                     <Toggle label="Send Message To The Same User Only Once Per Post" />
                     <Chips />
-                    <InputButton buttonLabel="Add Keyword" placeholder="Type here" label="Exclude Comments With These Keywords" />
-                    <InputButton buttonLabel="Add Keyword" placeholder="Type here" label="Only Trigger For Comments With These Keywords" />
+                    <InputButton buttonLabel="Add" placeholder="Type keyword..." label="Exclude Comments With These Keywords" />
+                    <InputButton buttonLabel="Add" placeholder="Type keyword..." label="Only Trigger For Comments With These Keywords" />
                     <Select label="Message Type" selected="Select" options={['Flow', 'Single Message']} />
                     <Select label="Message Type" selected="Select" options={['Flow', 'Single Message']} />
                 </>
