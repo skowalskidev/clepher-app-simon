@@ -7,7 +7,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="sm:flex p-6 sm:gap-12">
+    <div className="sm:flex sm:gap-12">
       <div className="hidden sm:block">
         <SideMenu
           title="Capture Tools"

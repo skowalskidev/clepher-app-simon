@@ -23,7 +23,7 @@ export default function RootLayout({
         <Header />
         <div className="flex">
           <Sidebar />
-          <div className="sm:ml-16 mt-16 w-full">
+          <div className="sm:ml-16 mt-16 w-full p-6">
             <AppRouterCacheProvider>
               {children}
             </AppRouterCacheProvider>
