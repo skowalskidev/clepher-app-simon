@@ -5,14 +5,15 @@ interface Props {
     label?: string;
     selected?: string;
     options: string[];
+    fill?: boolean;
 }
 
-export const Select = ({ label, selected, options }: Props) => {
+export const Select = ({ label, selected, options, fill }: Props) => {
     return (
-        <label className="form-control w-full max-w-xs">
-            <div className="label">
+        <label className={`form-control w-full ${fill ? '' : 'max-w-xs'}`}>
+            {label && <div className="label">
                 <span className="label-text">{label}</span>
-            </div>
+            </div>}
             <select className="select select-bordered">
                 <option disabled defaultValue={selected}>{selected}</option>
                 {options.map((option) => (

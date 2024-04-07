@@ -16,14 +16,14 @@ export default function Edit() {
                     <Chips />
                     <InputButton fill buttonLabel="Add" placeholder="Type keyword..." label="Exclude Comments With These Keywords" />
                     <InputButton fill buttonLabel="Add" placeholder="Type keyword..." label="Only Trigger For Comments With These Keywords" />
-                    <Select label="Message Type" selected="Select" options={['Flow', 'Single Message']} />
-                    <Select label="Message Type" selected="Select" options={['Flow', 'Single Message']} />
+                    <Select fill label="Message Type" selected="Select" options={['Flow', 'Single Message']} />
+                    <Select fill label="Message Type" selected="Select" options={['Flow', 'Single Message']} />
                 </>
             ),
         },
         {
             label: 'Auto Resonse',
-            content: <Select label="Message Type" selected="Select" options={['Flow', 'Single Message']} />,
+            content: <Select fill label="Message Type" selected="Select" options={['Flow', 'Single Message']} />,
         },
     ];
 
