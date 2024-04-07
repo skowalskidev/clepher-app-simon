@@ -1,8 +1,8 @@
 'use client'
 
 import { useRouter } from "next/navigation";
-import Table from "@/components/table/Table";
-import { HeadCell } from "@/components/table/Head";
+import Table from "@/components/DataDisplay/table/Table";
+import { HeadCell } from "@/components/DataDisplay/table/Head";
 import { Data, createHeadCell, createData, Actions } from "@/utils/table";
 
 export default function Home() {

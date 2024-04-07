@@ -13,7 +13,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { MdDelete, MdEdit } from "react-icons/md";
 import { BiRename } from 'react-icons/bi';
 import { EnhancedTableToolbar } from './Toolbar';
-import MenuPopupState from '../MenuPopupState';
+import MenuPopupState from '../../Actions/MenuPopupState';
 import { Head, HeadCell } from './Head';
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {

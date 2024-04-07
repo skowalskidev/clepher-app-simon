@@ -1,4 +1,4 @@
-import { HeadCell } from "@/components/table/Head";
+import { HeadCell } from "@/components/DataDisplay/table/Head";
 
 export interface Data {
     id: number;
