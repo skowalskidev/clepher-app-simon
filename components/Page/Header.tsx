@@ -6,7 +6,7 @@ export const Header = () => {
             <div className='relative w-12 h-12'>
                 <Image
                     priority
-                    src='/images/clepher-logo-black-716x204.svg'
+                    src='/images/icons/clepher-logo-black-716x204.svg'
                     alt='Clepher Logo'
                     fill
                 ></Image>

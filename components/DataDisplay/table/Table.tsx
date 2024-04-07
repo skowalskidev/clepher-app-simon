@@ -98,7 +98,7 @@ export default function EnhancedTable<Data>({ onRowClick, rows, headCells, order
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
             ) as TableData<Data>[],
-        [order, orderBy, page, rowsPerPage],
+        [order, orderBy, page, rowsPerPage, rows],
     );
 
     return (
