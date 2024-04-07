@@ -18,12 +18,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="winter" className="h-full bg-base-200">
-      <body className={`${inter.className} h-full`}>
+    <html lang="en" data-theme="winter" className="bg-base-200">
+      <body className={inter.className}>
         <Header />
-        <div className="flex h-full">
+        <div className="flex">
           <Sidebar />
-          <div className="sm:ml-16 mt-16 w-full h-full">
+          <div className="sm:ml-16 mt-16 w-full">
             <AppRouterCacheProvider>
               {children}
             </AppRouterCacheProvider>

@@ -19,7 +19,7 @@ export const TabbedTable = ({ leftPages, rightPages }: Props) => {
     const [rightSideActiveTab, setRightSideActiveTab] = useState(0);
 
     return (
-        <div className="flex gap-14 w-full">
+        <div className="flex flex-col-reverse sm:flex-row gap-14 w-full">
             <div className="flex-1 flex flex-col gap-2">
                 <TabsUnderlined
                     labels={leftPages.map(page => page.label)}

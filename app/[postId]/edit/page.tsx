@@ -34,15 +34,15 @@ export default function Edit() {
         },
         {
             label: 'Post ID / URL',
-            content: <div>Search for a Post</div>,
+            content: <InputButton buttonLabel="Grab Post" placeholder="Post ID / URL" />,
         },
     ];
 
     return (
-        <main className="flex h-full flex-col items-center justify-between p-6">
+        <main className="flex flex-col items-center justify-between p-6">
             <Box sx={{ width: '100%', height: '100%' }}>
                 <Paper sx={{ width: '100%', height: '100%', mb: 2 }}>
-                    <div className="flex h-full flex-col items-center justify-between p-6">
+                    <div className="flex flex-col items-center justify-between p-6">
                         <TabbedTable leftPages={leftPages} rightPages={rightPages} />
                     </div>
                 </Paper>
