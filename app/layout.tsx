@@ -19,9 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="winter" className="bg-base-200">
-      <body className={inter.className}>
+      <body className={`${inter.className} flex flex-col min-h-screen`}>
         <Header />
-        <div className="flex">
+        <div className="flex grow">
           <Sidebar />
           <div className="sm:ml-16 mt-16 w-full p-6">
             <AppRouterCacheProvider>

@@ -20,7 +20,7 @@ export const CardSplit = ({ leftPages, rightPages }: Props) => {
     const [rightSideActiveTab, setRightSideActiveTab] = useState(0);
 
     return (
-        <div className="p-6">
+        <div className="p-6 h-full">
             <Divider
                 reverse
                 content1={
