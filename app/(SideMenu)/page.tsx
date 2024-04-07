@@ -32,7 +32,7 @@ export default function Home() {
   ];
 
   return (
-    <main className="flex min-h-full flex-col items-center justify-between p-6">
+    <main className="flex min-h-full flex-col items-center justify-between">
       <Table<Data> onRowClick={onRowClick} headCells={headCells} rows={rows} orderByInitial="conversion" />
     </main>
   );
