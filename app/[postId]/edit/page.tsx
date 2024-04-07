@@ -34,7 +34,7 @@ export default function Edit() {
         },
         {
             label: 'Post ID / URL',
-            content: <InputButton buttonLabel="Grab Post" placeholder="Post ID / URL" />,
+            content: <InputButton buttonLabel="Fetch" placeholder="Post ID / URL" />,
         },
     ];
 
